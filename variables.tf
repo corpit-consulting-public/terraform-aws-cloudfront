@@ -281,19 +281,19 @@ variable "response_page_path" {
 
 #### Variables for Loggin Config 
 
-variable "bucket" {
+variable "log_bucket" {
   type        = string
   description = "The Amazon S3 bucket to store the access logs in, for example `myawslogbucket.s3.amazonaws.com`"
   default     = ""
 }
 
-variable "incude_cookies" {
+variable "log_incude_cookies" {
   type        = string
   description = "Specifies whether you want CloudFront to include cookies in access logs (default: false)."
   default     = "false"
 }
 
-variable "prefix" {
+variable "log_prefix" {
   type        = string
   description = "An optional string that you want CloudFront to prefix to the access log filenames for this distribution, for example, myprefix/."
   default     = ""
