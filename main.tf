@@ -1,3 +1,12 @@
+resource "aws_s3_bucket" "bucket_logs" {
+  bucket = var.s3_log_name
+  acl    = "private"
+
+  versioning {
+    enabled = true
+  }
+}
+
 resource "aws_cloudfront_distribution" "distribution" {
   enabled             = var.enabled
   is_ipv6_enabled     = var.is_ipv6_enabled
@@ -7,8 +16,8 @@ resource "aws_cloudfront_distribution" "distribution" {
 
   logging_config {
     include_cookies = var.log_include_cookies
-    bucket          = var.log_bucket
-    prefix          = var.log_prefix
+    bucket          = aws_s3_bucket.bucket_logs.name
+    prefix          = aws_s3_bucket.bucket_logs.prefix
   }
 
   aliases = [var.aliases]
