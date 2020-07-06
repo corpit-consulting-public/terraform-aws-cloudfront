@@ -203,7 +203,7 @@ variable "cookies" {
 }
 
 # TF-UPGRADE-TODO: Block type was not recognized, so this block and its contents were not automatically upgraded.
-variables "headers" {
+variable "headers" {
   type        = "list"
   description = "Specifies the Header,  if any, that you want CloudFront to vary upon for this cache behavior. Specify * to include all headers."
   default     = []
@@ -353,7 +353,7 @@ variable "origin_https_port" {
 }
 
 variable "origin_protocol_policy" {
-  type        = tring
+  type        = string
   description = "The origin protocol policy to apply to your origin. One of http-only, https-only, or match-viewer."
   default     = "match-viewer"
 }
@@ -364,14 +364,14 @@ variable "origin_ssl_protocols" {
   default     = ["TLSv1", "TLSv1.1", "TLSv1.2"]
 }
 
-variable "origin_keepalive_timeout " {
+variable "origin_keepalive_timeout" {
   type        = bool
   description = "he Custom KeepAlive timeout, in seconds. By default, AWS enforces a limit of 60. But you can request an increase."
   default     = "60"
 }
 
-variable "origin_read_timeout " {
-  type        = bool
+variable "origin_read_timeout" {
+  type        = number
   description = "The Custom Read timeout, in seconds. By default, AWS enforces a limit of 60. But you can request an increase."
   default     = "60"
 }
@@ -393,7 +393,7 @@ variable "acm_certificate_arn" {
 }
 
 variable "minimum_protocol_version" {
-  type        = sting
+  type        = "string"
   description = "The minimum version of the SSL protocol that you want CloudFront to use for HTTPS connections. Can only be set if cloudfront_default_certificate = false. One of SSLv3, TLSv1, TLSv1_2016, TLSv1.1_2016 or TLSv1.2_2018. Default: TLSv1. NOTE: If you are using a custom certificate (specified with acm_certificate_arn or iam_certificate_id), and have specified sni-only in ssl_support_method, TLSv1 or later must be specified. If you have specified vip in ssl_support_method, only SSLv3 or TLSv1 can be specified. If you have specified cloudfront_default_certificate, TLSv1 must be specified."
   default     = "TLSv1"
 }
