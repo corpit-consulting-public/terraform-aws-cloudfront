@@ -359,7 +359,7 @@ variable "origin_ssl_protocols" {
 }
 
 variable "origin_keepalive_timeout" {
-  type        = bool
+  type        = number
   description = "he Custom KeepAlive timeout, in seconds. By default, AWS enforces a limit of 60. But you can request an increase."
   default     = "60"
 }
