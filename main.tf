@@ -16,8 +16,8 @@ resource "aws_cloudfront_distribution" "distribution" {
 
   logging_config {
     include_cookies = var.log_include_cookies
-    bucket          = aws_s3_bucket.bucket_logs.name
-    prefix          = aws_s3_bucket.bucket_logs.prefix
+    bucket          = aws_s3_bucket.bucket_logs.bucket_name
+    prefix          = aws_s3_bucket.bucket_logs.bucket_prefix
   }
 
   aliases = [var.aliases]
