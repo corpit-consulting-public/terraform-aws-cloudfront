@@ -34,6 +34,7 @@ variable "default_root_object" {
 variable "enabled" {
   type        = string
   description = "Whether the distribution is enabled to accept and user request for content"
+  default     = ""
 }
 
 variable "is_ipv6_enabled" {
@@ -93,6 +94,7 @@ variable "tags" {
 variable "viewer_certificate" {
   type        = map(string)
   description = "The SSL configuration for this distribution (maximum one)"
+  default     = {}
 }
 
 variable "web_acl_id" {
