@@ -7,7 +7,7 @@ resource "aws_cloudfront_distribution" "distribution" {
 
   logging_config {
     include_cookies = var.log_include_cookies
-    bucket          = var.bucket
+    bucket          = var.log_bucket
     prefix          = var.log_prefix
   }
 
