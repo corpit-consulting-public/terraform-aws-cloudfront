@@ -26,7 +26,7 @@ variable "default_cache_behavior" {
 }
 
 variable "default_root_object" {
-  type        = sting
+  type        = string
   description = "The object that you want CloudFront to return (for example, index.html)"
   default     = "index.html"
 }
@@ -146,7 +146,7 @@ variable "field_level_encryption_id" {
 }
 
 # TF-UPGRADE-TODO: Block type was not recognized, so this block and its contents were not automatically upgraded.
-variables "forwarded_values" {
+variable "forwarded_values" {
   type        = "map"
   description = "The forwarded values configuration that specifies how CloudFront handles query strings, cookies and headers (maximum one)"
   default     = {}
@@ -182,12 +182,6 @@ variable "target_origin_id" {
   default     = ""
 }
 
-variable "trusted_signers" {
-  type        = ""
-  description = "The AWS accounts, if any, that you want to allow to create signed URLs for private content."
-  default     = ""
-}
-
 variable "viewer_protocol_policy" {
   type        = string
   description = "Use this element to specify the protocol that users can use to access the files in the origin specified by TargetOriginId when a request matches the path pattern in PathPattern. One of allow-all, https-only, or redirect-to-https."
@@ -204,7 +198,7 @@ variable "cookies" {
 
 # TF-UPGRADE-TODO: Block type was not recognized, so this block and its contents were not automatically upgraded.
 variable "headers" {
-  type        = "list"
+  type        = list(string)
   description = "Specifies the Header,  if any, that you want CloudFront to vary upon for this cache behavior. Specify * to include all headers."
   default     = []
 }
