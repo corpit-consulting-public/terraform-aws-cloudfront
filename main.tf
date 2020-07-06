@@ -1,5 +1,5 @@
 resource "aws_s3_bucket" "bucket_logs" {
-  bucket = var.s3_log_name
+  bucket = var.s3_logs_name
   acl    = "private"
 
   versioning {

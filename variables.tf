@@ -417,5 +417,6 @@ variable "geo_restriction_type" {
 variable "s3_logs_name" {
   type        = string
   description = "Bucket name for logs"
+  default     = ""
 }
 
