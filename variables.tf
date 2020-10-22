@@ -1,7 +1,7 @@
 variable "aliases" {
-  type        = string
+  type        = list(string)
   description = "Extra CNAMEs (alternative domain names), if any, for this distribution."
-  default     = ""
+  default     = []
 }
 
 variable "comment" {

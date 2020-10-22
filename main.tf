@@ -22,14 +22,9 @@ resource "aws_cloudfront_distribution" "distribution" {
 
   aliases = [var.aliases]
 
-  dynamic "custom_error_response" {
-    for_each = [var.custom_error_response]
+  dynamic "customer_error_response" {
+    for_each = [var.customer_error_response]
     content {
-      # TF-UPGRADE-TODO: The automatic upgrade tool can't predict
-      # which keys might be set in maps assigned here, so it has
-      # produced a comprehensive set here. Consider simplifying
-      # this after confirming which keys can be set in practice.
-
       error_caching_min_ttl = lookup(custom_error_response.value, "error_caching_min_ttl", null)
       error_code            = custom_error_response.value.error_code
       response_code         = lookup(custom_error_response.value, "response_code", null)
@@ -66,28 +61,12 @@ resource "aws_cloudfront_distribution" "distribution" {
     compress         = var.compress
 
     forwarded_values {
-      # TF-UPGRADE-TODO: In Terraform v0.10 and earlier, it was sometimes necessary to
-      # force an interpolation expression to be interpreted as a list by wrapping it
-      # in an extra set of list brackets. That form was supported for compatibility in
-      # v0.11, but is no longer supported in Terraform v0.12.
-      #
-      # If the expression in the following list itself returns a list, remove the
-      # brackets to avoid interpretation as a list of lists. If the expression
-      # returns a single list item then leave it as-is and remove this TODO comment.
       headers = [var.forward_headers]
 
       query_string = var.forward_query_string
 
       cookies {
         forward = var.forward_cookies
-        # TF-UPGRADE-TODO: In Terraform v0.10 and earlier, it was sometimes necessary to
-        # force an interpolation expression to be interpreted as a list by wrapping it
-        # in an extra set of list brackets. That form was supported for compatibility in
-        # v0.11, but is no longer supported in Terraform v0.12.
-        #
-        # If the expression in the following list itself returns a list, remove the
-        # brackets to avoid interpretation as a list of lists. If the expression
-        # returns a single list item then leave it as-is and remove this TODO comment.
         whitelisted_names = [var.forward_cookies_whitelisted_names]
       }
     }
@@ -101,11 +80,6 @@ resource "aws_cloudfront_distribution" "distribution" {
   dynamic "ordered_cache_behavior" {
     for_each = var.cache_behavior
     content {
-      # TF-UPGRADE-TODO: The automatic upgrade tool can't predict
-      # which keys might be set in maps assigned here, so it has
-      # produced a comprehensive set here. Consider simplifying
-      # this after confirming which keys can be set in practice.
-
       allowed_methods           = ordered_cache_behavior.value.allowed_methods
       cached_methods            = ordered_cache_behavior.value.cached_methods
       compress                  = lookup(ordered_cache_behavior.value, "compress", null)
