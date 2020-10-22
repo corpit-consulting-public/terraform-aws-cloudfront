@@ -1,7 +1,7 @@
 variable "aliases" {
-  type        = string
+  type        = list(string)
   description = "Extra CNAMEs (alternative domain names), if any, for this distribution."
-  default     = ""
+  default     = []
 }
 
 variable "comment" {
@@ -26,7 +26,7 @@ variable "default_cache_behavior" {
 }
 
 variable "default_root_object" {
-  type        = sting
+  type        = string
   description = "The object that you want CloudFront to return (for example, index.html)"
   default     = "index.html"
 }
@@ -34,10 +34,11 @@ variable "default_root_object" {
 variable "enabled" {
   type        = string
   description = "Whether the distribution is enabled to accept and user request for content"
+  default     = ""
 }
 
 variable "is_ipv6_enabled" {
-  type        = string
+  type        = bool
   description = "Whether the IPv6 is enabled for the distribution"
   default     = "true"
 }
@@ -63,6 +64,7 @@ variable "ordered_cache_behavior" {
 variable "origin" {
   type        = map(string)
   description = "One or more origins for this distribution (multiples allowed)"
+  default     = {}
 }
 
 variable "origin_group" {
@@ -92,6 +94,7 @@ variable "tags" {
 variable "viewer_certificate" {
   type        = map(string)
   description = "The SSL configuration for this distribution (maximum one)"
+  default     = {}
 }
 
 variable "web_acl_id" {
@@ -101,13 +104,13 @@ variable "web_acl_id" {
 }
 
 variable "retain_on_delete" {
-  type        = string
+  type        = bool
   description = "Disables the distribution intest of deleting in when destroyin the resour through Terraform. if this is set, the distribution needs to be deleted manually afterwards. Defaulr: flase"
   default     = "false"
 }
 
 variable "wait_for_deployment" {
-  type        = string
+  type        = bool
   description = "if enabled, the resource will wait for the distribution status to change from InProgres to Deployed. Setting this to false will skip the process. Default: true"
   default     = "true"
 }
@@ -127,13 +130,13 @@ variable "cache_methods" {
 }
 
 variable "compress" {
-  type        = string
+  type        = bool
   description = "Whether you want CloudFront to automatically compress content for web request that include `Accept-Encoding: gzip` in the request header. Default: false"
   default     = "false"
 }
 
 variable "default_ttl" {
-  type        = string
+  type        = number
   description = "The default amount of time (in seconds) tha an object is in a CloudFront cache before CloudFront fowards another request in the absence of an `Cache-Control max-age` or `Expires` header. Defaults to 1 day"
   default     = "60"
 }
@@ -145,7 +148,7 @@ variable "field_level_encryption_id" {
 }
 
 # TF-UPGRADE-TODO: Block type was not recognized, so this block and its contents were not automatically upgraded.
-variables "forwarded_values" {
+variable "forwarded_values" {
   type        = "map"
   description = "The forwarded values configuration that specifies how CloudFront handles query strings, cookies and headers (maximum one)"
   default     = {}
@@ -158,13 +161,13 @@ variable "lambda_function_association" {
 }
 
 variable "max_ttl" {
-  type        = string
+  type        = number
   description = "The maximum amount of time (in seconds) that an object is in a CloudFront cache before CloudFront forwards another request to your origin to determine whether the object has been updated. Only effective in the presence of Cache-Control max-age, Cache-Control s-maxage, and Expires headers. Defaults to 365 days."
   default     = "31536000"
 }
 
 variable "min_ttl" {
-  type        = string
+  type        = number
   description = "The minimum amount of time that you want objects to stay in CloudFront caches before CloudFront queries your origin to see whether the object has been updated. Defaults to 0 seconds 0"
   default     = "0"
 }
@@ -178,12 +181,6 @@ variable "path_pattern" {
 variable "target_origin_id" {
   type        = string
   description = "The value of ID for the origin that you want CloudFront to route requests to when a request matches the path pattern either for a cache behavior or for the default cache behavior."
-  default     = ""
-}
-
-variable "trusted_signers" {
-  type        = ""
-  description = "The AWS accounts, if any, that you want to allow to create signed URLs for private content."
   default     = ""
 }
 
@@ -202,15 +199,15 @@ variable "cookies" {
 }
 
 # TF-UPGRADE-TODO: Block type was not recognized, so this block and its contents were not automatically upgraded.
-variables "headers" {
-  type        = "list"
+variable "headers" {
+  type        = list(string)
   description = "Specifies the Header,  if any, that you want CloudFront to vary upon for this cache behavior. Specify * to include all headers."
   default     = []
 }
 
 variable "query_string" {
-  type        = string
-  description = " Indicates whether you want CloudFront to forward query strings to the origin that is associated with this cache behavior."
+  type        = bool
+  description = "Indicates whether you want CloudFront to forward query strings to the origin that is associated with this cache behavior."
   default     = "false"
 }
 
@@ -230,7 +227,7 @@ variable "lambda_arn" {
 }
 
 variable "include_body" {
-  type        = string
+  type        = bool
   description = "When set to true it exposes the request body to the lambda function. Defaults to false. Valid values `true or false`"
   default     = "false"
 }
@@ -281,19 +278,19 @@ variable "response_page_path" {
 
 #### Variables for Loggin Config 
 
-variable "bucket" {
+variable "log_bucket" {
   type        = string
   description = "The Amazon S3 bucket to store the access logs in, for example `myawslogbucket.s3.amazonaws.com`"
   default     = ""
 }
 
-variable "incude_cookies" {
-  type        = string
+variable "log_incude_cookies" {
+  type        = bool
   description = "Specifies whether you want CloudFront to include cookies in access logs (default: false)."
   default     = "false"
 }
 
-variable "prefix" {
+variable "log_prefix" {
   type        = string
   description = "An optional string that you want CloudFront to prefix to the access log filenames for this distribution, for example, myprefix/."
   default     = ""
@@ -352,7 +349,7 @@ variable "origin_https_port" {
 }
 
 variable "origin_protocol_policy" {
-  type        = tring
+  type        = string
   description = "The origin protocol policy to apply to your origin. One of http-only, https-only, or match-viewer."
   default     = "match-viewer"
 }
@@ -363,14 +360,14 @@ variable "origin_ssl_protocols" {
   default     = ["TLSv1", "TLSv1.1", "TLSv1.2"]
 }
 
-variable "origin_keepalive_timeout " {
-  type        = string
+variable "origin_keepalive_timeout" {
+  type        = number
   description = "he Custom KeepAlive timeout, in seconds. By default, AWS enforces a limit of 60. But you can request an increase."
   default     = "60"
 }
 
-variable "origin_read_timeout " {
-  type        = string
+variable "origin_read_timeout" {
+  type        = number
   description = "The Custom Read timeout, in seconds. By default, AWS enforces a limit of 60. But you can request an increase."
   default     = "60"
 }
@@ -392,12 +389,12 @@ variable "acm_certificate_arn" {
 }
 
 variable "minimum_protocol_version" {
-  type        = sting
+  type        = "string"
   description = "The minimum version of the SSL protocol that you want CloudFront to use for HTTPS connections. Can only be set if cloudfront_default_certificate = false. One of SSLv3, TLSv1, TLSv1_2016, TLSv1.1_2016 or TLSv1.2_2018. Default: TLSv1. NOTE: If you are using a custom certificate (specified with acm_certificate_arn or iam_certificate_id), and have specified sni-only in ssl_support_method, TLSv1 or later must be specified. If you have specified vip in ssl_support_method, only SSLv3 or TLSv1 can be specified. If you have specified cloudfront_default_certificate, TLSv1 must be specified."
   default     = "TLSv1"
 }
 
-variable "" {
+variable "ssl_support_method" {
   type        = string
   description = " Specifies how you want CloudFront to serve HTTPS requests. One of vip or sni-only. Required if you specify acm_certificate_arn or iam_certificate_id. NOTE: vip causes CloudFront to use a dedicated IP address and may incur extra charges"
   default     = "sni-only"
@@ -415,5 +412,11 @@ variable "geo_restriction_type" {
   type        = string
   description = "The method that you want to use to restrict distribution of your content by country: none, whitelist, or blacklist."
   default     = "none"
+}
+
+variable "s3_logs_name" {
+  type        = string
+  description = "Bucket name for logs"
+  default     = ""
 }
 
