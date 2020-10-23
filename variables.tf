@@ -1,5 +1,5 @@
 variable "aliases" {
-  type        = list(string)
+  type        = list
   description = "Extra CNAMEs (alternative domain names), if any, for this distribution."
   default     = []
 }
@@ -11,7 +11,7 @@ variable "comment" {
 }
 
 variable "customer_error_response" {
-  type = list(string)
+  type = list
 
   # http://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/custom-error-pages.html#custom-error-pages-procedure
   # https://www.terraform.io/docs/providers/aws/r/cloudfront_distribution.html#custom-error-response-arguments
@@ -20,7 +20,7 @@ variable "customer_error_response" {
 }
 
 variable "default_cache_behavior" {
-  type        = map(string)
+  type        = map
   description = "The default_cache_behavior for this distribution (maximun one)"
   default     = {}
 }
@@ -50,25 +50,25 @@ variable "http_version" {
 }
 
 variable "loggin_config" {
-  type        = map(string)
+  type        = map
   description = "The logging configuration that controls how longs are written to your distribution (maximun one)"
   default     = {}
 }
 
 variable "ordered_cache_behavior" {
-  type        = list(string)
+  type        = list
   description = "An ordered list of cache behaviors resources for this distribution. List from top to bottom in order of precedence. The topmost cahce behavior will have precedence 0."
   default     = []
 }
 
 variable "origin" {
-  type        = map(string)
+  type        = map
   description = "One or more origins for this distribution (multiples allowed)"
   default     = {}
 }
 
 variable "origin_group" {
-  type        = map(string)
+  type        = map
   description = "One or more origin_group for this distribution (multiples allowed)"
   default     = {}
 }
@@ -80,19 +80,19 @@ variable "price_class" {
 }
 
 variable "restriction" {
-  type        = map(string)
+  type        = map
   description = "The restriction configuration for this distribution (maximum one)"
   default     = {}
 }
 
 variable "tags" {
-  type        = map(string)
+  type        = map
   description = "A map of tags to assign to the resource"
   default     = {}
 }
 
 variable "viewer_certificate" {
-  type        = map(string)
+  type        = map
   description = "The SSL configuration for this distribution (maximum one)"
   default     = {}
 }
@@ -118,13 +118,13 @@ variable "wait_for_deployment" {
 ##### Variables for Chache Behavior Arguments
 
 variable "allowed_methods" {
-  type        = list(string)
+  type        = list
   description = "Controls wich HTTP mothods CloudFront processes and forwards to your Amazon S3 bucket or your custom origin. (e.g. ` GET, PUT, POST, DELETE, HEAD`) "
   default     = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
 }
 
 variable "cache_methods" {
-  type        = list(string)
+  type        = list
   description = "Controls whether CloudFront caches the response to request using the specified HTTP methods (e.g. ` GET, PUT, POST, DELETE, HEAD`)"
   default     = ["GET", "HEAD"]
 }
@@ -149,13 +149,13 @@ variable "field_level_encryption_id" {
 
 # TF-UPGRADE-TODO: Block type was not recognized, so this block and its contents were not automatically upgraded.
 variable "forwarded_values" {
-  type        = "map"
+  type        = map
   description = "The forwarded values configuration that specifies how CloudFront handles query strings, cookies and headers (maximum one)"
   default     = {}
 }
 
 variable "lambda_function_association" {
-  type        = map(string)
+  type        = map
   description = "A config block that triggers a lambda function with specific actions. Define below, maximum 4"
   default     = {}
 }
@@ -193,14 +193,14 @@ variable "viewer_protocol_policy" {
 #####variables for Forwarded Values Arguments
 
 variable "cookies" {
-  type        = map(string)
+  type        = map
   description = "The forwarded values cookies that specifies how CloudFront handles cookies (maximun one)"
   default     = {}
 }
 
 # TF-UPGRADE-TODO: Block type was not recognized, so this block and its contents were not automatically upgraded.
 variable "headers" {
-  type        = list(string)
+  type        = list
   description = "Specifies the Header,  if any, that you want CloudFront to vary upon for this cache behavior. Specify * to include all headers."
   default     = []
 }
@@ -241,7 +241,7 @@ variable "forward" {
 }
 
 variable "whitelisted_names" {
-  type        = list(string)
+  type        = list
   description = "If you have specified whitelist to forward, the whitelisted cookies that you want CloudFront to forward to your origin."
   default     = []
 }
@@ -299,7 +299,7 @@ variable "log_prefix" {
 #### Variables for Origins
 
 variable "custom_origin_config" {
-  type        = map(string)
+  type        = map
   description = "The CloudFront custom origin configuration information. If an S3 origin is required, use s3_origin_config instead."
   default     = {}
 }
@@ -329,7 +329,7 @@ variable "origin_path" {
 }
 
 variable "s3_origin_config" {
-  type        = map(string)
+  type        = map
   description = "The CloudFront S3 origin configuration information. If a custom origin is required, use custom_origin_config instead."
   default     = {}
 }
@@ -355,7 +355,7 @@ variable "origin_protocol_policy" {
 }
 
 variable "origin_ssl_protocols" {
-  type        = list(string)
+  type        = list
   description = " The SSL/TLS protocols that you want CloudFront to use when communicating with your origin over HTTPS. A list of one or more of SSLv3, TLSv1, TLSv1.1, and TLSv1.2."
   default     = ["TLSv1", "TLSv1.1", "TLSv1.2"]
 }
@@ -389,7 +389,7 @@ variable "acm_certificate_arn" {
 }
 
 variable "minimum_protocol_version" {
-  type        = "string"
+  type        = string
   description = "The minimum version of the SSL protocol that you want CloudFront to use for HTTPS connections. Can only be set if cloudfront_default_certificate = false. One of SSLv3, TLSv1, TLSv1_2016, TLSv1.1_2016 or TLSv1.2_2018. Default: TLSv1. NOTE: If you are using a custom certificate (specified with acm_certificate_arn or iam_certificate_id), and have specified sni-only in ssl_support_method, TLSv1 or later must be specified. If you have specified vip in ssl_support_method, only SSLv3 or TLSv1 can be specified. If you have specified cloudfront_default_certificate, TLSv1 must be specified."
   default     = "TLSv1"
 }
@@ -403,7 +403,7 @@ variable "ssl_support_method" {
 ### Variables for Restriction
 
 variable "geo_restriction_locations" {
-  type        = list(string)
+  type        = list
   description = "The ISO 3166-1-alpha-2 codes for which you want CloudFront either to distribute your content (whitelist) or not distribute your content (blacklist)"
   default     = []
 }
